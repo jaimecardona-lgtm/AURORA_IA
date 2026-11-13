@@ -83,3 +83,18 @@ Arranque: `uvicorn app.main:app` sobre la configuración de `backend/.env`, puer
   las únicas pruebas de los adaptadores y no sustituyen a estas.
 - Solo Chrome, y no se ha probado la aplicación en navegador en modo Supabase todavía.
 - Sin commits, push ni despliegue en Render.
+
+## Protecciones añadidas (control de versiones, Fase 08B-prep)
+
+`frontend/e2e/fase06c_supabase_real.py` escribe en la base de Supabase de producción. Para impedir escrituras accidentales:
+
+- **Por defecto es de solo lectura.** No crea datos desde la interfaz, no envía `PATCH`, `DELETE` ni `POST` cruzados, y no envía preguntas al copiloto.
+- **Escritura solo con `--escribir-en-supabase` y la confirmación exacta `SI`** en la terminal. Cualquier otra respuesta cancela sin escribir (código de salida 3).
+- **Preflight antes de abrir el navegador:** `GET /api/modo` debe devolver `produccion` con `supabase`. Si no, aborta.
+- **Copiloto:** la pregunta solo se envía si `GET /api/copilot/estado` declara `simulado`. Si no, se omite y no se consume OpenRouter.
+- **Las comprobaciones omitidas se registran como `OMITIDA`** en el JSON. No cuentan como aprobadas ni como fallidas. El JSON incluye `modo` (`solo_lectura` o `escritura_autorizada`).
+- Los resultados y evidencias de ejecuciones anteriores no se modifican.
+
+Verificación de las protecciones: `frontend/e2e/test_fase06c_protecciones.py` (6 pruebas, sin navegador ni red). Ejecutar a mano con `backend/.venv/Scripts/python.exe -m pytest frontend/e2e/test_fase06c_protecciones.py -q`. No forma parte de la CI.
+
+**Recomendación:** para verificar, usar `frontend/e2e/fase07c_verificacion.py`, que es de solo lectura por diseño.

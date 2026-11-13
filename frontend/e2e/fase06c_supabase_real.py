@@ -1,7 +1,18 @@
 """Fase 06C/06D · Integración real con Supabase Auth + PostgreSQL + RLS, cuentas A y B.
 
+⚠ ESCRIBE EN LA BASE REMOTA CUANDO SE LE INDICA. Script antiguo: para verificación usa
+  frontend/e2e/fase07c_verificacion.py (solo lectura).
+
+Protecciones (añadidas en la fase de control de versiones):
+  - Por defecto es de SOLO LECTURA: no crea datos ni envía PATCH/DELETE/POST cruzados.
+  - Para escribir hace falta el flag --escribir-en-supabase y escribir SI en la terminal.
+  - Antes de cualquier acción comprueba que el backend está en modo producción con Supabase
+    y que el copiloto es SIMULADO. Si no, aborta sin escribir.
+  - Las comprobaciones omitidas quedan como OMITIDA en el JSON; no cuentan como aprobadas.
+
 EJECUCIÓN MANUAL, EN PRIMER PLANO (no en segundo plano):
-  python frontend\\e2e\\fase06c_supabase_real.py visual-evidence\\fase-06d
+  python frontend\\e2e\\fase06c_supabase_real.py visual-evidence\\fase-06d                       (solo lectura)
+  python frontend\\e2e\\fase06c_supabase_real.py visual-evidence\\fase-06d --escribir-en-supabase  (escribe)
 
 Procedimiento de autenticación:
   - Las cuentas se autentican en secuencia: primero A, después B.
@@ -40,6 +51,21 @@ PREFIJO = "06C-"
 resultados: list[dict] = []
 ids: dict[str, str] = {}
 interrupciones: list[str] = []
+ESCRIBIR = False  # solo cambia a True con --escribir-en-supabase y la confirmación «SI»
+FLAG_ESCRITURA = "--escribir-en-supabase"
+
+
+def omitir(nombre: str, motivo: str) -> None:
+    """Comprobación no ejecutada por seguridad. No cuenta como aprobada ni como fallida."""
+    resultados.append({"prueba": nombre, "resultado": "OMITIDA", "detalle": motivo})
+    print(f"OMITIDA {nombre} | {motivo}", flush=True)
+
+
+def verificar_entorno_seguro() -> None:
+    """Aborta si el backend no es el de Supabase en producción. No envía ninguna escritura."""
+    modo = httpx.get(f"{API}/api/modo", timeout=10).json()
+    if modo.get("modo") != "produccion" or modo.get("persistencia") != "supabase":
+        raise SystemExit(f"ABORTADO: el backend en {API} no está en modo produccion/supabase.")
 
 
 class VentanaCerrada(Exception):
@@ -231,6 +257,10 @@ def pruebas_cruzadas(atacante: str, token_atacante: str, dueno: str, token_dueno
         lectura = api("GET", ruta, token_atacante)
         comprobar(f"{atacante} lee {recurso} de {dueno}: denegado",
                   lambda r=lectura: _ok(r.status_code == 404, f"HTTP {r.status_code}"), f"HTTP {lectura.status_code}")
+        if not ESCRIBIR:
+            omitir(f"{atacante} modifica {recurso} de {dueno}", f"solo lectura: PATCH no enviado ({FLAG_ESCRITURA} no indicado)")
+            omitir(f"{atacante} elimina {recurso} de {dueno}", f"solo lectura: DELETE no enviado ({FLAG_ESCRITURA} no indicado)")
+            continue
         mod = api("PATCH", ruta, token_atacante, cambio)
         comprobar(f"{atacante} modifica {recurso} de {dueno}: denegado",
                   lambda r=mod: _ok(r.status_code in (403, 404), f"HTTP {r.status_code}"), f"HTTP {mod.status_code}")
@@ -239,10 +269,13 @@ def pruebas_cruzadas(atacante: str, token_atacante: str, dueno: str, token_dueno
                   lambda r=dele: _ok(r.status_code in (403, 404), f"HTTP {r.status_code}"), f"HTTP {dele.status_code}")
 
     asig = ids.get(f"asignatura_{dueno}")
-    if asig:
+    if asig and not ESCRIBIR:
+        omitir(f"{atacante} no puede crear notas en una asignatura de {dueno}", f"solo lectura: POST no enviado ({FLAG_ESCRITURA} no indicado)")
+    if asig and ESCRIBIR:
         crear = api("POST", f"/api/subjects/{asig}/grades", token_atacante, {"descripcion": "intrusa", "nota": 1})
         comprobar(f"{atacante} no puede crear notas en una asignatura de {dueno}",
                   lambda: _ok(crear.status_code == 404, f"HTTP {crear.status_code}"), f"HTTP {crear.status_code}")
+    if asig:
         propia = api("GET", f"/api/subjects/{asig}", token_dueno)
         comprobar(f"{dueno}: sus registros siguen intactos tras los intentos de {atacante}",
                   lambda: _ok(propia.status_code == 200 and propia.json()["nombre"] == f"{PREFIJO}Cálculo {dueno}", f"HTTP {propia.status_code}"))
@@ -262,6 +295,10 @@ def dashboard_y_copiloto(token: str, etiqueta: str, prefijo: str) -> None:
               lambda: _ok(panel["finanzas"]["tiene_presupuesto"] and panel["tareas"]["pendientes"] >= 1,
                           f"pendientes={panel['tareas']['pendientes']}"))
 
+    estado = httpx.get(f"{COPILOTO}/api/copilot/estado", headers=cabeceras(token), timeout=10).json()
+    if estado.get("proveedor") != "simulado" or estado.get("simulado") is not True:
+        omitir(f"{etiqueta} · copiloto", "NO enviado: el copiloto no es SIMULADO (no se consume OpenRouter)")
+        return
     r = httpx.post(f"{COPILOTO}/api/copilot/chat", headers=cabeceras(token), timeout=30,
                    json={"message": "Resumen de mis datos",
                          "include_context": {"academic": True, "finance": True, "tasks": True}})
@@ -277,11 +314,23 @@ def dashboard_y_copiloto(token: str, etiqueta: str, prefijo: str) -> None:
 
 # ----------------------------------------------------------------- orquestación
 def main() -> int:
-    if len(sys.argv) != 2:
+    global ESCRIBIR
+    argumentos = [a for a in sys.argv[1:] if a != FLAG_ESCRITURA]
+    if len(argumentos) != 1:
         print(__doc__)
         return 2
+    if FLAG_ESCRITURA in sys.argv[1:]:
+        print("ATENCIÓN: esta ejecución ESCRIBIRÁ datos de prueba en la base de Supabase de producción.")
+        if input(f"Escribe SI para confirmar (cualquier otra cosa cancela): ").strip() != "SI":
+            print("Cancelado. No se ha escrito nada.")
+            return 3
+        ESCRIBIR = True
+    else:
+        print("MODO SOLO LECTURA: no se crean datos ni se envían escrituras cruzadas.")
+    verificar_entorno_seguro()
     marca = datetime.now().strftime("%Y%m%d-%H%M%S")
-    carpeta = Path(sys.argv[1]) / marca
+    argumentos_carpeta = argumentos[0]
+    carpeta = Path(argumentos_carpeta) / marca
     carpeta.mkdir(parents=True, exist_ok=True)
     salida = carpeta / "resultados.json"
 
@@ -296,9 +345,13 @@ def main() -> int:
             token_b = autenticar_manual(cuenta_b)
             comprobar("Cuentas A y B son usuarios distintos", lambda: _ok(token_a != token_b, ""))
 
-            crear_datos_ui(cuenta_a, token_a, carpeta, "A")
+            if ESCRIBIR:
+                crear_datos_ui(cuenta_a, token_a, carpeta, "A")
+            else:
+                omitir("Creación de datos desde la interfaz (A y B)", f"solo lectura ({FLAG_ESCRITURA} no indicado)")
             leer_y_guardar_ids(token_a, "A")
-            crear_datos_ui(cuenta_b, token_b, carpeta, "B")
+            if ESCRIBIR:
+                crear_datos_ui(cuenta_b, token_b, carpeta, "B")
             leer_y_guardar_ids(token_b, "B")
 
             pruebas_cruzadas("A", token_a, "B", token_b)
@@ -320,7 +373,9 @@ def main() -> int:
 
     (carpeta / "ids_prueba.json").write_text(json.dumps(ids, indent=2), encoding="utf-8")
     fallos = [r for r in resultados if r["resultado"] == "FAIL"]
-    salida.write_text(json.dumps({"marca": marca, "total": len(resultados), "fallos": len(fallos),
+    salida.write_text(json.dumps({"marca": marca, "modo": "escritura_autorizada" if ESCRIBIR else "solo_lectura",
+                                  "total": len(resultados), "fallos": len(fallos),
+                                  "omitidas": sum(1 for r in resultados if r["resultado"] == "OMITIDA"),
                                   "interrumpidas": interrupciones, "resultados": resultados},
                                  ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nTotal: {len(resultados)} · Fallos: {len(fallos)} · Interrumpidas: {len(interrupciones)}", flush=True)

@@ -1,0 +1,79 @@
+name: CI
+
+# Integración continua de AURORA AI.
+# No usa secretos, no contacta con Supabase ni con OpenRouter y no despliega nada.
+# Las pruebas de integración real (Playwright con sesiones de Supabase) son manuales y no se ejecutan aquí.
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend · pytest y CLI del SENA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Instalar dependencias fijadas
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Ejecutar pytest
+        run: python -m pytest -q
+
+      - name: CLI del SENA · calificaciones
+        run: python sena_cli/calificaciones.py 4.5 3.0 2.9
+
+      - name: CLI del SENA · presupuesto
+        run: python sena_cli/presupuesto.py --ingreso 2000000 --ahorro 300000 --gasto "Arriendo:600000:fijo" --gasto "Mercado:250000:variable"
+
+      - name: CLI del SENA · tareas
+        run: python sena_cli/tareas.py "Entregar AA2:1" "Leer guia:3:completada" "Revisar correo:2"
+
+  frontend:
+    name: Frontend · TypeScript y build de Vite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias desde el lockfile
+        run: npm ci
+
+      - name: Validación TypeScript estricta
+        run: npm run typecheck
+
+      - name: Build de producción con Vite
+        run: npm run build

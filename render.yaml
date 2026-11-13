@@ -1,0 +1,29 @@
+# Blueprint de Render: UN Web Service Docker que sirve API y frontend bajo el mismo origen.
+# Estado: configuración preparada. NO desplegado. Requiere crear el servicio en Render
+# y definir los valores marcados con sync: false en el panel (nunca en este archivo).
+services:
+  - type: web
+    name: aurora-ai
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: false
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: JWT_AUDIENCE
+        value: authenticated
+      - key: CORS_ORIGINS
+        value: ""
+      # Variables de compilación del frontend (clave PÚBLICA).
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_PUBLISHABLE_KEY
+        sync: false

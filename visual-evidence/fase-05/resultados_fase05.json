@@ -1,0 +1,171 @@
+{
+  "total": 33,
+  "fallos": 0,
+  "resultados": [
+    {
+      "prueba": "Copiloto: acceso desde la navegación principal",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto (simulado): la etiqueta indica SIMULADO y no es IA",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto: solo lectura, sin botones de acción sobre datos",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sugerencias: rellenan la pregunta sin enviarla",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto: el mensaje del usuario aparece en la conversación",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto: respuesta del asistente con su procedencia",
+      "resultado": "PASS",
+      "detalle": "respuesta recibida"
+    },
+    {
+      "prueba": "Copiloto: se indica qué datos se usaron",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto: el promedio mostrado proviene del motor (3.69 o 3.64 según datos)",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Teclado: Enter envía la pregunta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto: excluir áreas reduce los datos usados",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Seguridad: el HTML de la respuesta NO se renderiza ni se ejecuta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Seguridad: no aparece ninguna imagen inyectada",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Seguridad: no se ejecutó el script inyectado",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Errores: un 429 se muestra como error con mensaje claro",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Reintentos: el botón Reintentar reenvía la misma pregunta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Reintentos: la respuesta llega tras reintentar",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Reintentos: no se duplica la pregunta ni queda el error tras reintentar",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Errores: un 503 muestra el motivo en español",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Historial: la consulta envía el turno anterior y no repite la pregunta actual",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Historial: el límite de turnos enviados es de 6 como máximo",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Indicador: mientras se genera, se muestra el estado de espera",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Límite: el campo impide escribir más caracteres que el máximo",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Conversación: limpiar la vacía",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sin clave: se muestra el estado de configuración pendiente",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sin clave: el campo de pregunta está deshabilitado",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sin clave: no hay botón de enviar activo",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sin clave: no aparece ninguna respuesta simulada",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sin clave: el estado no muestra ningún valor de clave",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Sin clave: las áreas siguen accesibles",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Responsive copiloto movil 390px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Responsive copiloto tableta 820px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Responsive copiloto escritorio 1366px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Consola del navegador sin errores de JavaScript",
+      "resultado": "PASS",
+      "detalle": ""
+    }
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "total": 20,
+  "con_desborde": 0,
+  "resultados": [
+    {
+      "tamano": "movil",
+      "viewport": "390x844",
+      "modulo": "Mi espacio",
+      "medidas": {
+        "innerWidth": 390,
+        "outerWidth": 522,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "ancho_contenido": 390,
+        "ancho_maximo_modulo": 358,
+        "columnas_kpi": 2
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "movil",
+      "viewport": "390x844",
+      "modulo": "Académico",
+      "medidas": {
+        "innerWidth": 390,
+        "outerWidth": 522,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "ancho_contenido": 390,
+        "ancho_maximo_modulo": 358,
+        "columnas_kpi": 2
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "movil",
+      "viewport": "390x844",
+      "modulo": "Finanzas",
+      "medidas": {
+        "innerWidth": 390,
+        "outerWidth": 522,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "ancho_contenido": 390,
+        "ancho_maximo_modulo": 358,
+        "columnas_kpi": 2
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "movil",
+      "viewport": "390x844",
+      "modulo": "Tareas",
+      "medidas": {
+        "innerWidth": 390,
+        "outerWidth": 522,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "ancho_contenido": 390,
+        "ancho_maximo_modulo": 358,
+        "columnas_kpi": 2
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "tableta",
+      "viewport": "768x1024",
+      "modulo": "Mi espacio",
+      "medidas": {
+        "innerWidth": 768,
+        "outerWidth": 768,
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "ancho_contenido": 768,
+        "ancho_maximo_modulo": 736,
+        "columnas_kpi": 3
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "tableta",
+      "viewport": "768x1024",
+      "modulo": "Académico",
+      "medidas": {
+        "innerWidth": 768,
+        "outerWidth": 768,
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "ancho_contenido": 768,
+        "ancho_maximo_modulo": 736,
+        "columnas_kpi": 4
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "tableta",
+      "viewport": "768x1024",
+      "modulo": "Finanzas",
+      "medidas": {
+        "innerWidth": 768,
+        "outerWidth": 768,
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "ancho_contenido": 768,
+        "ancho_maximo_modulo": 736,
+        "columnas_kpi": 4
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "tableta",
+      "viewport": "768x1024",
+      "modulo": "Tareas",
+      "medidas": {
+        "innerWidth": 768,
+        "outerWidth": 768,
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "ancho_contenido": 768,
+        "ancho_maximo_modulo": 736,
+        "columnas_kpi": 4
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "portatil",
+      "viewport": "1366x768",
+      "modulo": "Mi espacio",
+      "medidas": {
+        "innerWidth": 1366,
+        "outerWidth": 1366,
+        "clientWidth": 1366,
+        "scrollWidth": 1366,
+        "ancho_contenido": 1146,
+        "ancho_maximo_modulo": 1114,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "portatil",
+      "viewport": "1366x768",
+      "modulo": "Académico",
+      "medidas": {
+        "innerWidth": 1366,
+        "outerWidth": 1366,
+        "clientWidth": 1366,
+        "scrollWidth": 1366,
+        "ancho_contenido": 1146,
+        "ancho_maximo_modulo": 1114,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "portatil",
+      "viewport": "1366x768",
+      "modulo": "Finanzas",
+      "medidas": {
+        "innerWidth": 1366,
+        "outerWidth": 1366,
+        "clientWidth": 1366,
+        "scrollWidth": 1366,
+        "ancho_contenido": 1146,
+        "ancho_maximo_modulo": 1114,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "portatil",
+      "viewport": "1366x768",
+      "modulo": "Tareas",
+      "medidas": {
+        "innerWidth": 1366,
+        "outerWidth": 1366,
+        "clientWidth": 1366,
+        "scrollWidth": 1366,
+        "ancho_contenido": 1146,
+        "ancho_maximo_modulo": 1114,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "escritorio",
+      "viewport": "1440x900",
+      "modulo": "Mi espacio",
+      "medidas": {
+        "innerWidth": 1440,
+        "outerWidth": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "ancho_contenido": 1220,
+        "ancho_maximo_modulo": 1188,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "escritorio",
+      "viewport": "1440x900",
+      "modulo": "Académico",
+      "medidas": {
+        "innerWidth": 1440,
+        "outerWidth": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "ancho_contenido": 1220,
+        "ancho_maximo_modulo": 1188,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "escritorio",
+      "viewport": "1440x900",
+      "modulo": "Finanzas",
+      "medidas": {
+        "innerWidth": 1440,
+        "outerWidth": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "ancho_contenido": 1220,
+        "ancho_maximo_modulo": 1188,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "escritorio",
+      "viewport": "1440x900",
+      "modulo": "Tareas",
+      "medidas": {
+        "innerWidth": 1440,
+        "outerWidth": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "ancho_contenido": 1220,
+        "ancho_maximo_modulo": 1188,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "full_hd",
+      "viewport": "1920x1080",
+      "modulo": "Mi espacio",
+      "medidas": {
+        "innerWidth": 1920,
+        "outerWidth": 1920,
+        "clientWidth": 1920,
+        "scrollWidth": 1920,
+        "ancho_contenido": 1700,
+        "ancho_maximo_modulo": 1480,
+        "columnas_kpi": 6
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "full_hd",
+      "viewport": "1920x1080",
+      "modulo": "Académico",
+      "medidas": {
+        "innerWidth": 1920,
+        "outerWidth": 1920,
+        "clientWidth": 1920,
+        "scrollWidth": 1920,
+        "ancho_contenido": 1700,
+        "ancho_maximo_modulo": 1480,
+        "columnas_kpi": 8
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "full_hd",
+      "viewport": "1920x1080",
+      "modulo": "Finanzas",
+      "medidas": {
+        "innerWidth": 1920,
+        "outerWidth": 1920,
+        "clientWidth": 1920,
+        "scrollWidth": 1920,
+        "ancho_contenido": 1700,
+        "ancho_maximo_modulo": 1480,
+        "columnas_kpi": 8
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    },
+    {
+      "tamano": "full_hd",
+      "viewport": "1920x1080",
+      "modulo": "Tareas",
+      "medidas": {
+        "innerWidth": 1920,
+        "outerWidth": 1920,
+        "clientWidth": 1920,
+        "scrollWidth": 1920,
+        "ancho_contenido": 1700,
+        "ancho_maximo_modulo": 1480,
+        "columnas_kpi": 8
+      },
+      "desborde_px": 0,
+      "ok_sin_desborde": true
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "total": 26,
+  "fallos": 0,
+  "peticiones_chat_totales": 4,
+  "resultados": [
+    {
+      "prueba": "Widget: botón flotante «Habla con AURORA ✦» visible",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget: botón en la esquina inferior derecha",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget: se abre sin cambiar de página",
+      "resultado": "PASS",
+      "detalle": "url=True"
+    },
+    {
+      "prueba": "Widget: el foco entra en el campo al abrir",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget: el ancho en escritorio es de unos 400 px",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget: Escape cierra el panel",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget: al cerrar, el foco vuelve al botón",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget: respuesta marcada como simulada (no es IA)",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Expandir: el widget se oculta sobre la página completa",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Expandir: la pregunta enviada desde el widget aparece en la página completa",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Expandir: la respuesta también aparece en la página completa",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Página completa: un envío genera una sola petición",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Navegación: al volver al copiloto se conserva la conversación",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Navegación: el widget vuelve a aparecer en otras secciones (no en el copiloto)",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Conversaciones: «Nueva conversación» muestra el estado inicial",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Conversaciones: la conversación anterior sigue en el panel lateral (dos entradas)",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Conversaciones: el panel lateral se puede ocultar",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Errores: un 503 se muestra con mensaje claro",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Reintentos: la respuesta llega tras reintentar",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Reintentos: la pregunta no se duplica ni queda el error",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Limpiar: la conversación activa queda vacía",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Responsive copiloto completo movil 390px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Responsive copiloto completo tableta 768px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Responsive copiloto completo escritorio 1440px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Responsive copiloto completo full_hd 1920px: sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "desborde=0px"
+    },
+    {
+      "prueba": "Responsive widget móvil: panel casi a pantalla completa y sin ocultar la cabecera",
+      "resultado": "PASS",
+      "detalle": ""
+    }
+  ]
+}

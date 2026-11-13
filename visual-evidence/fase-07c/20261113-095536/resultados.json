@@ -1,0 +1,306 @@
+{
+  "marca": "20261113-095536",
+  "estado": "COMPLETA",
+  "inicio": "2026-11-13T09:55:36",
+  "fin": "2026-11-13T09:56:39",
+  "total": 59,
+  "fallos": 0,
+  "no_concluyentes": 0,
+  "resultados": [
+    {
+      "prueba": "Inicio de sesión manual · A en la pestaña única",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · 6 asignaturas DEMO con JWT de A",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · 17 notas DEMO en total",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · promedio de «A-Álgebra lineal» coincide con el motor",
+      "resultado": "PASS",
+      "detalle": "2.75"
+    },
+    {
+      "prueba": "A · promedio de «A-Cálculo diferencial» coincide con el motor",
+      "resultado": "PASS",
+      "detalle": "4.10"
+    },
+    {
+      "prueba": "A · promedio de «A-Estadística» coincide con el motor",
+      "resultado": "PASS",
+      "detalle": "3.43"
+    },
+    {
+      "prueba": "A · promedio de «A-Física II» coincide con el motor",
+      "resultado": "PASS",
+      "detalle": "2.47"
+    },
+    {
+      "prueba": "A · promedio de «A-Inglés B1» coincide con el motor",
+      "resultado": "PASS",
+      "detalle": "4.40"
+    },
+    {
+      "prueba": "A · promedio de «A-Programación I» coincide con el motor",
+      "resultado": "PASS",
+      "detalle": "3.17"
+    },
+    {
+      "prueba": "A · presupuesto de octubre existe",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · ingreso 2.800.000 y meta 500.000",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · 8 gastos DEMO sumando 2.270.000",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · saldo 530.000 y meta cumplida",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · 10 tareas DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · prioridades alta 3 / media 4 / baja 3",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "A · 3 vencidas y 3 próximas según la fecha de hoy",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "UI · A ve su asignatura DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "UI · selector de mes queda en 2026-10",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "UI · A, octubre: KPI Saldo muestra 530.000",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "UI · A ve su tarea DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Persistencia · A tras recargar la pestaña",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Responsive · dashboard de A movil 390px sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "0px"
+    },
+    {
+      "prueba": "Responsive · dashboard de A escritorio 1440px sin desplazamiento horizontal",
+      "resultado": "PASS",
+      "detalle": "0px"
+    },
+    {
+      "prueba": "Copiloto · A (página) responde con SIMULADO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · A (página) exactamente 1 petición",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · A (widget) responde con SIMULADO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · A (widget) exactamente 1 petición",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Cierre de sesión A · vuelve el formulario en la misma pestaña",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Cierre de sesión A · no queda sesión en el navegador",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Cierre de sesión A · sigue habiendo una sola pestaña",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Inicio de sesión manual · B en la misma pestaña",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Una sola pestaña durante toda la ejecución",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "B · 1 asignatura DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "B · 2 notas DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "B · noviembre: ingreso 1.200.000 y saldo 900.000",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "B · meta de 150.000 cumplida",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "B · 1 gasto DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "B · 1 tarea DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "UI · B ve su asignatura DEMO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "UI · B no ve asignaturas de A",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · B (página) responde con SIMULADO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · B (página) exactamente 1 petición",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · B (widget) responde con SIMULADO",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · B (widget) exactamente 1 petición",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Token de A vigente antes de RLS",
+      "resultado": "PASS",
+      "detalle": "HTTP 200"
+    },
+    {
+      "prueba": "Token de B vigente antes de RLS",
+      "resultado": "PASS",
+      "detalle": "HTTP 200"
+    },
+    {
+      "prueba": "Copiloto · estado A: proveedor simulado, sin OpenRouter",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Copiloto · estado B: proveedor simulado, sin OpenRouter",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "RLS · A lee asignatura de B por UUID: denegado",
+      "resultado": "PASS",
+      "detalle": "HTTP 404"
+    },
+    {
+      "prueba": "RLS · A lee nota de B por UUID: denegado",
+      "resultado": "PASS",
+      "detalle": "HTTP 404"
+    },
+    {
+      "prueba": "RLS · lista de asignaturas de A sin datos de B",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "RLS · lista de tareas de A sin datos de B",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "RLS · A no ve gastos de B en su mes",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "RLS · B lee asignatura de A por UUID: denegado",
+      "resultado": "PASS",
+      "detalle": "HTTP 404"
+    },
+    {
+      "prueba": "RLS · B lee nota de A por UUID: denegado",
+      "resultado": "PASS",
+      "detalle": "HTTP 404"
+    },
+    {
+      "prueba": "RLS · lista de asignaturas de B sin datos de A",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "RLS · lista de tareas de B sin datos de A",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "RLS · B no ve gastos de A en su mes",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Ejecución sin ventanas adicionales",
+      "resultado": "PASS",
+      "detalle": ""
+    }
+  ]
+}

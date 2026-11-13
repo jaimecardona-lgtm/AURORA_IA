@@ -1,0 +1,15 @@
+# Evitar enviar al contexto de Docker secretos, dependencias locales y artefactos.
+**/.env
+**/.env.*
+!**/.env.example
+**/.venv
+**/venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/node_modules
+frontend/dist
+.git
+docs
+supabase/tests
+*.log

@@ -1,0 +1,47 @@
+# Secretos y entorno local (NUNCA versionar)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Vite
+node_modules/
+frontend/dist/
+dist/
+*.log
+npm-debug.log*
+
+# Editores y SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Salidas de build/CI
+coverage/
+
+# Base de datos SQLite local (desarrollo y demostración): NUNCA versionar
+backend/data/
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Evidencias de ejecuciones con sesión real (muestran datos de cuentas o identificadores): no se publican.
+visual-evidence/fase-07c/20261112-*/
+visual-evidence/fase-07c/20261113-*/*.png
+visual-evidence/fase-06d/20261112-194002/
+visual-evidence/**/ids_prueba.json

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Arquitectura C4 interactiva de AURORA AI: React, FastAPI, Supabase, OpenRouter y Render.">
+  <title>AURORA AI — Arquitectura C4 | React · FastAPI · Supabase</title>
+  <style>
+    :root { --bg:#080e1c; --panel:#101a2b; --panel2:#132037; --panel3:#18243b; --edge:#273651; --text:#eef3fc; --sub:#a4b1c7; --muted:#7587a5; --mint:#6bf7cf; --sky:#76aaff; --violet:#b6a5ff; --orange:#ffbc71; --green:#78e7ab; --red:#ff9c97; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, 'Segoe UI', system-ui, -apple-system, Arial, sans-serif; background: radial-gradient(ellipse 850px 480px at 10% 0%,#142747 0%,transparent 74%),radial-gradient(ellipse 900px 550px at 90% 13%,#1b1740 0%,transparent 70%),var(--bg); color:var(--text); min-height:100vh; }
+    .wrap { width:min(1530px,calc(100% - 64px)); margin:auto; }
+    .topbar { padding:28px 0 24px; display:flex; align-items:center; justify-content:space-between; gap:15px; border-bottom:1px solid #24314c; }
+    .brand { display:flex; align-items:center; gap:13px; letter-spacing:.07em; font-size:16px; font-weight:800; }
+    .brand-mark { width:43px; height:43px; border-radius:13px; background:linear-gradient(145deg,#62fad1,#4c88e5 58%,#7863ea); display:grid; place-items:center; font-size:23px; color:#06142a; box-shadow:0 0 32px #5bcfc44a; }
+    .topright { display:flex; align-items:center; gap:13px; flex-wrap:wrap; color:var(--sub); font-size:12px; }
+    .pill { padding:7px 11px; border-radius:50px; border:1px solid #355074; color:#bfd4f1; background:#172640; }
+    .dot { display:inline-block; width:7px; height:7px; background:#ffbe73; border-radius:50%; margin-right:6px; }
+    .hero { padding:47px 0 30px; max-width:100%; }
+    .eyebrow { font-size:12px; letter-spacing:.17em; color:var(--mint); font-weight:800; text-transform:uppercase; }
+    h1 { font-size:clamp(38px,5vw,66px); letter-spacing:-.065em; line-height:1.04; margin:11px 0 14px; font-weight:800; }
+    .text-gradient { background:linear-gradient(100deg,#f5faff 8%,#bce7f6 45%,#8e97ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .lede { max-width:900px; color:#b2c2db; font-size:16px; line-height:1.75; margin:0 0 25px; }
+    .stack { display:flex; flex-wrap:wrap; gap:9px; }
+    .tech { border:1px solid #324564; background:#111f34; padding:8px 13px; border-radius:9px; color:#cddcf1; font-size:12px; font-weight:600; }
+    .tech b { color:#d3f8ec; }
+    .section-meta { display:flex; align-items:end; justify-content:space-between; margin:23px 0 16px; gap:20px; flex-wrap:wrap; }
+    .section-meta h2 { margin:0 0 5px; font-size:23px; letter-spacing:-.025em; }
+    .section-meta p { margin:0; color:var(--sub); line-height:1.5; font-size:13px; }
+    .tabs { display:flex; gap:7px; background:#101b2d; border:1px solid #2a3d5b; border-radius:13px; padding:5px; }
+    .tab { cursor:pointer; border:0; background:transparent; color:#aebcd4; border-radius:9px; padding:11px 17px; font-size:13px; font-weight:700; white-space:nowrap; }
+    .tab[aria-selected="true"] { background:linear-gradient(90deg,#315a6e,#2f4772); color:#fff; box-shadow:0 2px 18px #080f234a; }
+    .tab:focus-visible,.node:focus-visible { outline:3px solid var(--mint); outline-offset:2px; }
+    .workspace { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:15px; align-items:stretch; }
+    .map-shell { min-width:0; border:1px solid #2b3c58; border-radius:18px; background:linear-gradient(145deg,#0d1729,#0b1323); overflow:hidden; box-shadow:0 18px 50px #0005; }
+    .map-bar { padding:15px 19px; border-bottom:1px solid #253850; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .map-bar strong { font-size:14px; }
+    .map-bar .sub { font-size:12px; color:#8ca0bc; }
+    .map-bar .badge { background:#173331; border:1px solid #2f6f64; color:#9ff3dd; padding:7px 11px; border-radius:30px; font-size:11px; font-weight:700; }
+    .viewport { width:100%; overflow:auto; background-image: radial-gradient(#273a5469 0.75px, transparent .75px); background-size: 19px 19px; }
+    #diagram { display:block; width:100%; height:auto; min-width:780px; min-height:470px; }
+    .map-footer { border-top:1px solid #263750; padding:13px 20px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; color:#95a6bf; font-size:11px; }
+    .legend { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    .legend i { display:inline-block; width:15px; height:4px; vertical-align:middle; border-radius:4px; margin-right:5px; }
+    .side { background:linear-gradient(160deg,#15233a,#101c30); border:1px solid #2b405c; border-radius:18px; padding:22px; min-height:550px; }
+    .side-eyebrow { font-size:11px; color:var(--mint); letter-spacing:.15em; font-weight:800; text-transform:uppercase; }
+    .side-title { font-size:23px; font-weight:800; letter-spacing:-.025em; margin:15px 0 7px; }
+    .side-tech { color:var(--sky); font-size:12px; margin-bottom:13px; font-weight:700; }
+    .side-description { color:#b9c9de; font-size:13px; line-height:1.7; margin:0; }
+    .side-rule { height:1px; background:#2a3e58; margin:22px 0 16px; }
+    .side h4 { font-size:12px; text-transform:uppercase; letter-spacing:.11em; margin:0 0 12px; color:#a9bbd3; }
+    .side ul { padding-left:18px; margin:0; color:#c9d8e9; line-height:1.7; font-size:12px; }
+    .side li { margin-bottom:10px; }
+    .note { color:#bfd8e9; background:#1a3046; border-left:3px solid #66e5c9; padding:12px; font-size:12px; line-height:1.6; border-radius:4px 10px 10px 4px; margin-top:20px; }
+    .below { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; margin:18px 0 42px; }
+    .panel { border-radius:17px; background:#111d2f; border:1px solid #2a3c57; padding:23px; }
+    .panel h3 { font-size:19px; letter-spacing:-.025em; margin:0 0 6px; }
+    .panel .hint { color:#9fb0c9; font-size:12px; margin:0 0 19px; line-height:1.6; }
+    .flowline { display:flex; gap:12px; align-items:flex-start; margin:0 0 16px; }
+    .flow-num { flex:0 0 auto; width:27px; height:27px; display:grid; place-items:center; font-size:12px; font-weight:800; color:#0b1b26; border-radius:8px; background:#6bf7cf; }
+    .flow-text strong { display:block; font-size:13px; margin:2px 0 4px; }
+    .flow-text span { display:block; color:#a5b7d0; font-size:12px; line-height:1.55; }
+    .decision { display:grid; grid-template-columns:110px 1fr; gap:10px; border-top:1px solid #273853; padding:12px 0; font-size:12px; line-height:1.5; }
+    .decision span:first-child { color:#75d7ce; font-weight:800; }
+    .decision span:last-child { color:#c5d0e1; }
+    .footer { margin-bottom:35px; border-top:1px solid #2a3e58; padding:20px 0; display:flex; flex-wrap:wrap; gap:13px; justify-content:space-between; color:#7f91b0; font-size:12px; }
+    .node { cursor:pointer; }
+    .node rect.main { stroke-width:1.7; transition:stroke .17s,filter .17s; }
+    .node:hover rect.main,.node.selected rect.main { stroke:#c3ffed; stroke-width:3; filter:drop-shadow(0 0 12px #5ef4c74f); }
+    .node text { pointer-events:none; font-family:'Segoe UI',Arial,sans-serif; }
+    .edge-label { fill:#9aafca; font-size:15px; font-weight:600; stroke:#0c1627; stroke-width:5px; paint-order:stroke; font-family:'Segoe UI',Arial,sans-serif; }
+    .domain-label { fill:#91a5c3; letter-spacing:2px; font-size:15px; font-weight:800; font-family:'Segoe UI',Arial,sans-serif; }
+    @media(max-width:1070px){.workspace{grid-template-columns:1fr}.side{min-height:0}.below{grid-template-columns:1fr}.wrap{width:min(100% - 32px,1530px)} .hero{padding-top:30px}.section-meta{align-items:start}}
+    @media(max-width:620px){.topbar{align-items:flex-start}.topright{justify-content:flex-end}.lede{font-size:14px}.tabs{overflow:auto;max-width:100%}.tab{padding:10px 12px}.tech{font-size:11px}.decision{grid-template-columns:1fr;gap:2px}.map-footer{padding:10px}}
+    @media print {body{background:#fff!important;color:#151b29!important}.hero,.section-meta,.workspace,.below{break-inside:avoid}.topbar,.panel,.side,.map-shell{box-shadow:none!important;border-color:#adbac7!important}.wrap{width:100%}.tabs{display:none}.map-bar,.map-footer,.side{background:#f6f7fa!important;color:#151b29!important}.side-description,.side li,.panel .hint,.flow-text span{color:#35465b!important} #diagram{min-width:0}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">A</div><span>AURORA <span style="color:#6cf3d3">AI</span></span></div>
+    <div class="topright"><span class="pill"><span class="dot"></span>ARQUITECTURA OBJETIVO · V1.0</span><span>Diseño inicial · Noviembre 2026</span></div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">Sistema de gestión académica inteligente · Modelo C4</div>
+    <h1><span class="text-gradient">Arquitectura que conecta</span><br>aprendizaje, datos e IA.</h1>
+    <p class="lede">Mapa navegable de la solución propuesta para el proyecto del SENA. Explora el contexto, los contenedores y los componentes. Haz clic en cada bloque para conocer su responsabilidad, cómo se comunica y qué debemos construir.</p>
+    <div class="stack">
+      <span class="tech"><b>UI</b> · React / TypeScript</span>
+      <span class="tech"><b>API</b> · Python / FastAPI</span>
+      <span class="tech"><b>Datos</b> · Supabase PostgreSQL</span>
+      <span class="tech"><b>Identidad</b> · Supabase Auth</span>
+      <span class="tech"><b>IA</b> · OpenRouter</span>
+      <span class="tech"><b>Deploy</b> · Render / Docker</span>
+    </div>
+  </section>
+  <section class="section-meta">
+    <div><h2>Explorador C4</h2><p>Tres niveles del mismo sistema · arquitectura propuesta, todavía no verificada en producción</p></div>
+    <div class="tabs" role="tablist" aria-label="Nivel C4">
+      <button class="tab" id="tab-c1" role="tab" aria-selected="false" aria-controls="diagram" data-level="c1">C1 · Contexto</button>
+      <button class="tab" id="tab-c2" role="tab" aria-selected="true" aria-controls="diagram" data-level="c2">C2 · Contenedores</button>
+      <button class="tab" id="tab-c3" role="tab" aria-selected="false" aria-controls="diagram" data-level="c3">C3 · Componentes</button>
+    </div>
+  </section>
+  <main class="workspace">
+    <section class="map-shell" aria-labelledby="diagram-title">
+      <div class="map-bar"><div><strong id="diagram-title">C2 · Contenedores tecnológicos</strong><div class="sub" id="diagram-subtitle">Flujos de autenticación, operaciones, persistencia e IA.</div></div><span class="badge">DISEÑO PROPUESTO</span></div>
+      <div class="viewport" role="region" aria-label="Diagrama de arquitectura C4; desplaza horizontalmente si hace falta" tabindex="0"><svg id="diagram" viewBox="0 0 1500 760" role="img" aria-label="Diagrama de contenedores de AURORA AI"></svg></div>
+      <div class="map-footer"><div class="legend"><span><i style="background:#66d5f0"></i>Aplicación</span><span><i style="background:#b7a8ff"></i>Identidad / datos</span><span><i style="background:#fab477"></i>Proveedor externo</span><span><i style="background:#67e2b0"></i>Flujo principal</span></div><span>Selecciona un bloque para ver detalles →</span></div>
+    </section>
+    <aside class="side" id="details" aria-live="polite">
+      <div class="side-eyebrow">Ficha del componente</div>
+      <div class="side-title" id="selected-title">FastAPI · Backend</div>
+      <div class="side-tech" id="selected-tech">Python 3.12+ · FastAPI · Pydantic</div>
+      <p class="side-description" id="selected-description">Orquesta el negocio, verifica la identidad del usuario y envía las solicitudes a Supabase e IA sin exponer secretos.</p>
+      <div class="side-rule"></div>
+      <h4>Responsabilidades</h4>
+      <ul id="selected-bullets"><li>Ejecutar reglas de negocio.</li><li>Validar las solicitudes.</li></ul>
+      <div class="note" id="selected-note"><strong>Importante:</strong> cada llamada de datos debe respetar la identidad del usuario y las políticas RLS.</div>
+    </aside>
+  </main>
+  <section class="below">
+    <article class="panel"><h3>Flujo de punta a punta</h3><p class="hint">La ruta que debe funcionar antes de generar los informes del SENA.</p>
+      <div class="flowline"><span class="flow-num">01</span><div class="flow-text"><strong>Inicio de sesión</strong><span>React inicia la sesión mediante Supabase Auth; el usuario obtiene un JWT de acceso.</span></div></div>
+      <div class="flowline"><span class="flow-num">02</span><div class="flow-text"><strong>Operaciones del negocio</strong><span>React envía solicitudes HTTPS a FastAPI con el JWT; FastAPI valida el token y ejecuta los motores de calificaciones, presupuesto y tareas.</span></div></div>
+      <div class="flowline"><span class="flow-num">03</span><div class="flow-text"><strong>Persistencia privada</strong><span>FastAPI accede a Supabase bajo el contexto del usuario; PostgreSQL aplica RLS para que cada persona opere solo sobre sus datos.</span></div></div>
+      <div class="flowline"><span class="flow-num">04</span><div class="flow-text"><strong>Copiloto inteligente</strong><span>FastAPI resume datos permitidos y consulta OpenRouter con la clave privada del servidor. El modelo responde sin alterar registros automáticamente.</span></div></div>
+      <div class="flowline" style="margin-bottom:0"><span class="flow-num">05</span><div class="flow-text"><strong>Despliegue</strong><span>GitHub activa la compilación Docker en Render; un servicio FastAPI publica la API y sirve la aplicación React compilada.</span></div></div>
+    </article>
+    <article class="panel"><h3>Decisiones de ingeniería</h3><p class="hint">Alcance que usaremos para el primer prompt.</p>
+      <div class="decision"><span>Arquitectura</span><span>Monorepo con <strong>frontend/</strong>, <strong>backend/</strong>, <strong>supabase/migrations/</strong> y <strong>docs/</strong>.</span></div>
+      <div class="decision"><span>Seguridad</span><span>JWT validado en FastAPI, acceso por usuario y RLS con comprobaciones de permisos; nunca usar una clave secreta de Supabase en React.</span></div>
+      <div class="decision"><span>Despliegue</span><span>Una Web Service Docker en Render para reducir infraestructura y mantener React + API en el mismo origen.</span></div>
+      <div class="decision"><span>Dominio</span><span>Calificaciones, presupuesto en COP y tareas reutilizan las reglas Python de la actividad previa.</span></div>
+      <div class="decision"><span>Aprendizaje</span><span>Primero arquitectura y código verificado; después pruebas reales, capturas, informe AA2-EV01 y video AA2-EV02.</span></div>
+      <div class="note"><strong>Estado inicial:</strong> existe un repositorio prototipo con React/FastAPI y lógica local; Supabase Auth, PostgreSQL y las pruebas de despliegue son objetivos por implementar, no resultados ya alcanzados.</div>
+    </article>
+  </section>
+  <footer class="footer"><div><strong>AURORA AI</strong> · Ingeniería de software con IA · Formación SENA</div><div>Diagrama interactivo, autónomo y sin dependencias externas · C4 C1 / C2 / C3</div></footer>
+</div>
+<script>
+(function(){
+  'use strict';
+  const ns='http://www.w3.org/2000/svg';
+  const defs={
+    c1:{title:'C1 · Contexto del sistema',subtitle:'Quién utiliza AURORA y con qué servicios externos interactúa.',selected:'system',domains:[{x:430,y:137,w:545,h:470,label:'SISTEMA AURORA AI',color:'#6bf7cf'}],nodes:[
+      {id:'student',x:55,y:294,w:250,h:136,type:'actor',tag:'PERSONA',title:'Estudiante',tech:'Usuario de la plataforma',description:'Consulta su rendimiento académico, controla su presupuesto y organiza sus tareas.',bullets:['Se registra o inicia sesión.','Gestiona sus propios datos.','Pregunta al copiloto por recomendaciones.'],note:'Las métricas de ejemplo no se consideran datos reales.'},
+      {id:'system',x:486,y:251,w:430,h:233,type:'application',tag:'SISTEMA',title:'AURORA AI',tech:'Plataforma web educativa con IA',description:'Unifica la experiencia académica, financiera y de productividad con asistencia inteligente.',bullets:['Calcula promedios y evalúa asignaturas.','Registra presupuesto y movimientos en COP.','Organiza y prioriza tareas.','Consulta un asistente de IA sin revelar claves privadas.'],note:'El sistema se desarrollará y validará antes de documentar resultados.'},
+      {id:'auth',x:1100,y:138,w:330,h:127,type:'infra',tag:'SERVICIO EXTERNO',title:'Supabase Auth',tech:'Identidad · JWT',description:'Ofrece registro, inicio de sesión y emisión de tokens de acceso.',bullets:['Registro e inicio de sesión.','Entrega de tokens JWT.','Recuperación de credenciales.'],note:'Las credenciales no se guardan en nuestra base de datos de dominio.'},
+      {id:'db',x:1100,y:325,w:330,h:127,type:'infra',tag:'SERVICIO EXTERNO',title:'Supabase PostgreSQL',tech:'Postgres · RLS',description:'Almacena los datos académicos, movimientos financieros y tareas de cada usuario.',bullets:['Tablas de dominio y migraciones SQL.','Aislamiento por usuario mediante RLS.','Datos persistidos entre dispositivos.'],note:'Cada consulta debe respetar los permisos del usuario.'},
+      {id:'llm',x:1100,y:517,w:330,h:127,type:'external',tag:'PROVEEDOR DE IA',title:'OpenRouter',tech:'LLM vía HTTPS',description:'Proporciona acceso a modelos de lenguaje para recomendaciones, sin sustituir el cálculo determinista.',bullets:['Genera recomendaciones explicativas.','Recibe contexto minimizado.','No almacena cambios del sistema por sí mismo.'],note:'Evitar compartir información sensible innecesaria con el proveedor.'}
+    ],edges:[
+      {points:[[305,362],[486,362]],label:'HTTPS',at:[395,349],color:'main'},
+      {points:[[916,285],[1008,285],[1008,200],[1100,200]],label:'identidad',at:[1020,185],color:'auth'},
+      {points:[[916,373],[1100,388]],label:'persistencia',at:[1013,367],color:'db'},
+      {points:[[916,450],[1008,450],[1008,581],[1100,581]],label:'prompts',at:[1017,564],color:'ai'}
+    ]},
+    c2:{title:'C2 · Contenedores tecnológicos',subtitle:'Flujos de autenticación, operaciones, persistencia e IA.',selected:'api',domains:[{x:270,y:135,w:745,h:505,label:'RENDER · WEB SERVICE DOCKER',color:'#6decc2'},{x:1050,y:135,w:393,h:382,label:'SUPABASE CLOUD',color:'#b8a4ff'}],nodes:[
+      {id:'student',x:35,y:319,w:200,h:134,type:'actor',tag:'PERSONA',title:'Estudiante',tech:'Navegador web',description:'Usa AURORA desde escritorio o móvil.',bullets:['Se autentica.','Registra calificaciones, transacciones y tareas.','Consulta las recomendaciones.'],note:'La aplicación será responsive y accesible.'},
+      {id:'github',x:325,y:35,w:260,h:87,type:'utility',tag:'REPOSITORIO',title:'GitHub + Actions',tech:'Código · CI',description:'Conserva el proyecto y ejecuta validaciones automatizadas.',bullets:['Ramas y pull requests.','Pruebas backend y frontend.','Control de secretos y configuración.'],note:'Render desplegará el código del repositorio conectado.'},
+      {id:'spa',x:318,y:296,w:283,h:163,type:'application',tag:'CONTENEDOR FRONTEND',title:'React SPA',tech:'TypeScript · Vite',description:'Presenta el dashboard, captura datos y administra el estado de la sesión.',bullets:['Vistas de notas, finanzas, tareas y copiloto.','Supabase JS solo para Auth.','Solicitudes al backend vía /api.'],note:'El frontend usa la clave publicable, nunca secretos de servidor.'},
+      {id:'api',x:679,y:296,w:285,h:163,type:'application',tag:'CONTENEDOR BACKEND',title:'FastAPI · Python',tech:'API REST · Pydantic · httpx',description:'Implementa reglas de negocio, verifica usuarios y comunica la aplicación con persistencia e IA.',bullets:['Validación segura de JWT.','Motores independientes de calificaciones, presupuesto y tareas.','Consultas a Supabase con identidad del usuario.','Proxy seguro para el modelo de IA.'],note:'Sin service_role para solicitudes corrientes de usuarios.'},
+      {id:'auth',x:1091,y:170,w:310,h:117,type:'infra',tag:'AUTHENTICATION',title:'Supabase Auth',tech:'JWT · inicio de sesión',description:'Gestiona la identidad del estudiante y suministra tokens JWT.',bullets:['Registro e inicio de sesión.','JWT para /api con verificación.','Renovación de sesión desde el SDK.'],note:'Backend valida firma, issuer, audience y expiración.'},
+      {id:'db',x:1091,y:347,w:310,h:120,type:'infra',tag:'DATABASE',title:'PostgreSQL',tech:'RLS · tablas por usuario',description:'Almacena registros académicos, de finanzas y de tareas.',bullets:['Migraciones SQL versionadas.','Restricciones y claves foráneas.','RLS y pruebas de aislamiento.'],note:'La seguridad de datos se valida también con dos cuentas de prueba.'},
+      {id:'llm',x:1091,y:571,w:310,h:117,type:'external',tag:'SERVICIO EXTERNO',title:'OpenRouter',tech:'API de modelo generativo',description:'Atiende los mensajes del copiloto enviados solo por FastAPI.',bullets:['Clave en variable de entorno del servidor.','Contexto limitado y controlado.','Mensajes de error y límites de uso.'],note:'El modelo debe distinguir observaciones reales de recomendaciones.'}
+    ],edges:[
+      {points:[[235,388],[318,388]],label:'interacción',at:[267,373],color:'main'},
+      {points:[[601,384],[679,384]],label:'JSON /api',at:[605,364],color:'main'},
+      {points:[[460,296],[460,230],[1091,230]],label:'Auth SDK',at:[623,215],color:'auth'},
+      {points:[[964,394],[1091,406]],label:'RLS + JWT',at:[972,379],color:'db'},
+      {points:[[964,436],[1029,436],[1029,628],[1091,628]],label:'IA privada',at:[1038,608],color:'ai'},
+      {points:[[455,122],[455,164]],label:'CI/CD',at:[475,151],color:'main'},
+      {points:[[820,296],[820,245],[1091,245]],label:'JWKS',at:[855,230],color:'auth',dash:true}
+    ]},
+    c3:{title:'C3 · Componentes del backend FastAPI',subtitle:'Diseño interno: rutas, identidad, dominio, persistencia y copiloto.',selected:'router',domains:[{x:214,y:89,w:988,h:628,label:'FASTAPI · CONTENEDOR BACKEND',color:'#65d9ec'}],nodes:[
+      {id:'client',x:20,y:345,w:162,h:106,type:'actor',tag:'CLIENTE',title:'React SPA',tech:'HTTPS + Bearer JWT',description:'Interfaz que envía solicitudes autenticadas al servidor.',bullets:['Obtiene un JWT de Supabase Auth.','Llama a /api y presenta resultados.'],note:'No consulta la base de datos de dominio desde el navegador.'},
+      {id:'identity',x:253,y:159,w:245,h:115,type:'infra',tag:'AUTORIZACIÓN',title:'JWT verifier',tech:'JWKS · PyJWT',description:'Valida firma y atributos del token, identifica user_id y deniega peticiones inválidas.',bullets:['Firma, exp, issuer y audience.','Identidad del usuario en request.','Respuesta 401/403 ante errores.'],note:'Nunca fiarse de un user_id suministrado libremente en el body.'},
+      {id:'router',x:253,y:373,w:245,h:130,type:'application',tag:'CAPA HTTP',title:'API Routers',tech:'FastAPI · Pydantic',description:'Define endpoints de calificaciones, presupuesto, tareas y copiloto, validando contratos y respuestas.',bullets:['/api/grades y /api/budget.','/api/tasks y /api/copilot.','Esquemas Pydantic y errores coherentes.'],note:'El health check se mantiene en /api/health.'},
+      {id:'grades',x:581,y:148,w:253,h:111,type:'application',tag:'DOMINIO',title:'Grades service',tech:'Python puro',description:'Calcula promedios y estados académicos aplicando reglas comprobables.',bullets:['Promedios y escala de notas.','Validación de datos.','Pruebas unitarias reproducibles.'],note:'La IA no calcula la nota: lo hace código determinista.'},
+      {id:'budget',x:581,y:323,w:253,h:111,type:'application',tag:'DOMINIO',title:'Budget service',tech:'Python puro · COP',description:'Calcula saldos, presupuestos y objetivos de ahorro.',bullets:['Ingresos, gastos y saldos.','Validaciones de montos.','Resultados con reglas transparentes.'],note:'Evitar float para dinero en la versión persistente: usar Decimal.'},
+      {id:'tasks',x:581,y:498,w:253,h:111,type:'application',tag:'DOMINIO',title:'Tasks service',tech:'Python puro',description:'Ordena pendientes por prioridad y estado.',bullets:['Prioridad y estado de tareas.','Ordenación explicable.','Pruebas de límites y entradas inválidas.'],note:'El usuario mantiene el control de sus actividades.'},
+      {id:'repo',x:916,y:244,w:252,h:130,type:'infra',tag:'ACCESO A DATOS',title:'Supabase repository',tech:'REST / SDK · token del usuario',description:'Lee y escribe registros de dominio con el JWT del estudiante para aplicar RLS.',bullets:['Interfaces de repositorio aisladas.','CRUD de subjects, grades, finance y tasks.','Control de fallos y pruebas de autorización.'],note:'No usar service_role con identidad de usuario para accesos cotidianos.'},
+      {id:'copilot',x:916,y:497,w:252,h:114,type:'external',tag:'ORQUESTACIÓN IA',title:'Copilot service',tech:'Prompt builder · OpenRouter',description:'Elabora respuestas explicativas sobre los resultados del usuario sin mutar su información.',bullets:['Compone contexto mínimo y seguro.','Envía solicitudes solo desde backend.','Registra modo demo o LLM real.'],note:'No afirmar recomendaciones como si fueran cálculos validados.'},
+      {id:'supabase',x:1273,y:266,w:205,h:115,type:'infra',tag:'SERVICIO EXTERNO',title:'Supabase',tech:'Postgres · RLS',description:'Base de datos gestionada con reglas de acceso por usuario.',bullets:['Políticas por auth.uid().','Persistencia segura.','Migraciones verificables.'],note:'Pruebas con dos cuentas para descartar filtraciones.'},
+      {id:'openrouter',x:1273,y:508,w:205,h:114,type:'external',tag:'SERVICIO EXTERNO',title:'OpenRouter',tech:'Chat completions',description:'Proveedor de inferencia para el copiloto.',bullets:['Respuestas de lenguaje natural.','Restricciones de tokens y costo.'],note:'Clave privada solo en el backend.'}
+    ],edges:[
+      {points:[[182,399],[253,399]],label:'JSON',at:[203,384],color:'main'},
+      {points:[[376,373],[376,274]],label:'JWT',at:[387,310],color:'auth'},
+      {points:[[498,403],[532,403],[532,203],[581,203]],color:'main'},
+      {points:[[498,422],[581,379]],color:'main'},
+      {points:[[498,446],[532,446],[532,555],[581,555]],color:'main'},
+      {points:[[834,203],[877,203],[877,288],[916,288]],color:'db'},
+      {points:[[834,379],[916,321]],color:'db'},
+      {points:[[834,553],[877,553],[877,350],[916,350]],color:'db'},
+      {points:[[1168,310],[1273,321]],label:'JWT + RLS',at:[1161,289],color:'db'},
+      {points:[[498,475],[865,475],[865,555],[916,555]],label:'contexto',at:[779,458],color:'ai',dash:true},
+      {points:[[1168,554],[1273,564]],label:'HTTPS',at:[1180,537],color:'ai'}
+    ]}
+  };
+  const colors={actor:{bg:'#1c2b40',stroke:'#6e92b9',tag:'#a9d0ef'},application:{bg:'#173644',stroke:'#62cecf',tag:'#94f9e0'},infra:{bg:'#282340',stroke:'#a68fe4',tag:'#d2c5ff'},external:{bg:'#3c2b26',stroke:'#e9ad70',tag:'#ffcd92'},utility:{bg:'#233048',stroke:'#85a7df',tag:'#b0cafd'}};
+  const edgeColors={main:'#6adac0',auth:'#aa9ff6',db:'#86a7f9',ai:'#f0aa76'};
+  const svg=document.getElementById('diagram'); let level='c2',selected='api';
+  function el(type,attrs={},text){const v=document.createElementNS(ns,type);Object.entries(attrs).forEach(([k,val])=>v.setAttribute(k,String(val)));if(text!==undefined)v.textContent=text;return v;}
+  function add(parent,child){parent.appendChild(child);return child;}
+  function txt(x,y,str,size=20,fill='#fff',weight='700'){return el('text',{x,y,fill,'font-size':size,'font-weight':weight,'font-family':'Segoe UI, Arial, sans-serif'},str);}
+  function line(parent,parts,color,dash){const p=el('polyline',{points:parts.map(p=>p.join(',')).join(' '),fill:'none',stroke:color,'stroke-width':'3.0','stroke-linecap':'round','stroke-linejoin':'round','marker-end':'url(#arrow'+Object.keys(edgeColors).find(k=>edgeColors[k]===color)+')'});if(dash)p.setAttribute('stroke-dasharray','9 9');return add(parent,p);}
+  function node(parent,n){const palette=colors[n.type]||colors.application;const g=add(parent,el('g',{class:'node'+(selected===n.id?' selected':''),tabindex:0,role:'button','aria-label':n.title+': ver detalles',transform:`translate(${n.x} ${n.y})`}));
+    add(g,el('rect',{class:'main',x:0,y:0,width:n.w,height:n.h,rx:18,fill:palette.bg,stroke:palette.stroke}));
+    add(g,el('rect',{x:16,y:18,width:37,height:32,rx:9,fill:palette.stroke,opacity:'.15'}));
+    add(g,txt(24,41,(n.type==='actor'?'U':n.type==='external'?'AI':n.type==='infra'?'DB':n.type==='utility'?'G':'<>'),14,palette.tag,'800'));
+    add(g,txt(65,31,n.tag,12,palette.tag,'800'));
+    const titleSize=n.w<210?21:(n.title.length>20?22:26);
+    add(g,txt(19,76,n.title,titleSize,'#f1f7ff','750'));
+    const maxChars=Math.max(20,Math.floor((n.w-35)/9));let tech=n.tech;if(tech.length>maxChars)tech=tech.slice(0,maxChars-1)+'…';
+    add(g,txt(19,102,tech,15,'#a8bbd2','500'));
+    if(n.h>140){add(g,el('line',{x1:19,y1:119,x2:n.w-19,y2:119,stroke:palette.stroke,opacity:'.25'}));add(g,txt(19,143,n.id==='system'?'3 dominios + copiloto':'Servicio principal del sistema',14,'#b0d5e8','600'));}
+    g.addEventListener('click',()=>choose(n.id));g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();choose(n.id);}});
+  }
+  function choose(id){selected=id;const n=defs[level].nodes.find(n=>n.id===id);if(!n)return;
+    document.getElementById('selected-title').textContent=n.title;
+    document.getElementById('selected-tech').textContent=n.tech;
+    document.getElementById('selected-description').textContent=n.description;
+    const list=document.getElementById('selected-bullets');list.replaceChildren(...n.bullets.map(b=>{const li=document.createElement('li');li.textContent=b;return li;}));
+    const note=document.getElementById('selected-note');note.textContent=n.note;
+    svg.querySelectorAll('.node').forEach(g=>g.classList.toggle('selected',g.getAttribute('aria-label').startsWith(n.title+':')));
+  }
+  function render(next){level=next;const data=defs[level];selected=data.selected;svg.replaceChildren();svg.setAttribute('aria-label',data.title+'. Selecciona un componente para conocer detalles.');
+    document.getElementById('diagram-title').textContent=data.title;
+    document.getElementById('diagram-subtitle').textContent=data.subtitle;
+    const defsEl=add(svg,el('defs'));
+    Object.entries(edgeColors).forEach(([key,color])=>{const marker=add(defsEl,el('marker',{id:'arrow'+key,markerWidth:9,markerHeight:9,refX:7,refY:4,orient:'auto',markerUnits:'userSpaceOnUse'}));add(marker,el('path',{d:'M1 1 L7 4 L1 7',fill:'none',stroke:color,'stroke-width':2.5,'stroke-linecap':'round'}));});
+    data.domains.forEach(d=>{add(svg,el('rect',{x:d.x,y:d.y,width:d.w,height:d.h,rx:24,fill:'#19283b',opacity:'.47',stroke:d.color,'stroke-width':1.6,'stroke-dasharray':'8 8'}));add(svg,el('text',{x:d.x+18,y:d.y+27,class:'domain-label'},d.label));});
+    data.edges.forEach(e=>{const c=edgeColors[e.color]||edgeColors.main;line(svg,e.points,c,e.dash);if(e.label)add(svg,el('text',{x:e.at[0],y:e.at[1],class:'edge-label','text-anchor':'middle'},e.label));});
+    data.nodes.forEach(n=>node(svg,n));
+    document.querySelectorAll('.tab').forEach(b=>{b.setAttribute('aria-selected',b.dataset.level===level?'true':'false');});choose(selected);
+  }
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>render(b.dataset.level)));
+  render('c2');
+})();
+</script>
+</body>
+</html>

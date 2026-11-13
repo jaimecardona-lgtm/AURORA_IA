@@ -1,0 +1,11 @@
+# Dependencias de producción (versiones fijadas para reproducibilidad).
+fastapi==0.162.5
+starlette==1.10.0
+uvicorn==0.54.0
+pydantic==2.14.3
+pydantic-settings==2.16.2
+PyJWT==2.15.1
+cryptography==50.0.2
+httpx==0.28.1
+
+# Desarrollo y pruebas: pip install -r requirements-dev.txt

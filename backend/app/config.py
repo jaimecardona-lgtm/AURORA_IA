@@ -62,6 +62,8 @@ class Settings(BaseSettings):
     # Copiloto (OpenRouter). La clave SOLO se lee del entorno del servidor y nunca se imprime.
     openrouter_api_key: SecretStr = Field(default=SecretStr(""), alias="OPENROUTER_API_KEY")
     openrouter_model: str = Field(default="", alias="OPENROUTER_MODEL")
+    # Modelos alternativos explícitos: SOLO :free para evitar cobros inesperados.
+    openrouter_fallback_models: str = Field(default="", alias="OPENROUTER_FALLBACK_MODELS")
     openrouter_timeout_seconds: float = Field(default=20.0, alias="OPENROUTER_TIMEOUT_SECONDS", gt=0, le=60)
     copilot_provider: str = Field(default="openrouter", alias="COPILOT_PROVIDER")
     copilot_max_tokens: int = Field(default=700, alias="COPILOT_MAX_TOKENS", ge=50, le=2000)
@@ -73,6 +75,20 @@ class Settings(BaseSettings):
     # cuando la migración 20261113120000_fase08a_conversaciones_ia.sql esté aplicada en Supabase.
     # Con el valor en false, el copiloto funciona solo en memoria y no lo presenta como guardado.
     ai_conversaciones_persistentes: bool = Field(default=False, alias="AI_CONVERSACIONES_PERSISTENTES")
+
+    @field_validator("openrouter_fallback_models")
+    @classmethod
+    def _fallbacks_solo_gratuitos(cls, value: str) -> str:
+        modelos = [m.strip() for m in value.split(",") if m.strip()]
+        if len(modelos) > 3 or len(set(modelos)) != len(modelos):
+            raise ValueError("OPENROUTER_FALLBACK_MODELS permite hasta 3 modelos diferentes.")
+        if any(not m.endswith(":free") or "/" not in m for m in modelos):
+            raise ValueError("OPENROUTER_FALLBACK_MODELS acepta solo IDs de modelos :free.")
+        return ",".join(modelos)
+
+    @property
+    def fallback_models_list(self) -> list[str]:
+        return self.openrouter_fallback_models.split(",") if self.openrouter_fallback_models else []
 
     @field_validator("copilot_provider")
     @classmethod

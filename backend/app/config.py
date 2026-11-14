@@ -94,15 +94,19 @@ class Settings(BaseSettings):
         """Falla al arrancar si la combinación de configuración es insegura."""
         if self.copilot_provider == "simulado" and self.app_env.strip().lower() not in DEMO_ALLOWED_ENVIRONMENTS:
             raise ConfigurationError("COPILOT_PROVIDER=simulado solo se permite en desarrollo. No es IA real.")
-        if not self.demo_mode:
-            return
-        if self.app_env.strip().lower() not in DEMO_ALLOWED_ENVIRONMENTS:
-            raise ConfigurationError(
-                "DEMO_MODE=true no puede usarse fuera de desarrollo. "
-                "La aplicación no arranca con el modo demo en producción."
-            )
-        if self.persistence_backend != "sqlite":
-            raise ConfigurationError("DEMO_MODE=true requiere PERSISTENCE_BACKEND=sqlite.")
+        if self.demo_mode:
+            if self.app_env.strip().lower() not in DEMO_ALLOWED_ENVIRONMENTS:
+                raise ConfigurationError(
+                    "DEMO_MODE=true no puede usarse fuera de desarrollo. "
+                    "La aplicación no arranca con el modo demo en producción."
+                )
+            if self.persistence_backend != "sqlite":
+                raise ConfigurationError("DEMO_MODE=true requiere PERSISTENCE_BACKEND=sqlite.")
+        if self.app_env.strip().lower() == "production":
+            if self.persistence_backend != "supabase":
+                raise ConfigurationError("Produccion requiere PERSISTENCE_BACKEND=supabase.")
+            if not (self.supabase_url.startswith("https://") and self.supabase_publishable_key.strip()):
+                raise ConfigurationError("Produccion requiere SUPABASE_URL HTTPS y SUPABASE_PUBLISHABLE_KEY.")
 
     @field_validator("supabase_url")
     @classmethod

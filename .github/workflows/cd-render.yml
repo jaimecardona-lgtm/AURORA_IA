@@ -1,0 +1,33 @@
+name: CD Render (opcional)
+
+# Despliega solo después de que CI termine correctamente en main.
+# Requiere secreto RENDER_DEPLOY_HOOK_URL en GitHub.
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cd-render-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Aviso si no hay hook configurado
+        env:
+          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "No hay deploy hook: despliegue omitido."
+            exit 0
+          fi
+          echo "CI aprobada en main. Solicitando deploy..."
+          curl --fail --silent --show-error --retry 2 --max-time 30 -X POST "$DEPLOY_HOOK" > /dev/null
+          echo "Render aceptó la solicitud HTTP. Comprobar el resultado del deploy y el smoke test en Render."

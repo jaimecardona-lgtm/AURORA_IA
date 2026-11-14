@@ -10,10 +10,24 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /api/health
-    autoDeploy: false
+    autoDeploy: false # Activar solo al terminar validacion manual en Render
     envVars:
       - key: APP_ENV
         value: production
+      - key: PERSISTENCE_BACKEND
+        value: supabase
+      - key: DEMO_MODE
+        value: "false"
+      - key: COPILOT_PROVIDER
+        value: openrouter
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        sync: false
+      - key: AI_CONVERSACIONES_PERSISTENTES
+        value: "false"
+      - key: VITE_API_BASE_URL
+        value: ""
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_PUBLISHABLE_KEY

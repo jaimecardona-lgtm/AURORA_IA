@@ -105,6 +105,8 @@ def test_modo_demo_no_aparece_en_produccion_con_supabase(monkeypatch, entorno_sq
     monkeypatch.setenv("PERSISTENCE_BACKEND", "supabase")
     monkeypatch.setenv("APP_ENV", "production")
     monkeypatch.setenv("DEMO_MODE", "false")
+    monkeypatch.setenv("SUPABASE_URL", "https://proyecto-ficticio.supabase.co")
+    monkeypatch.setenv("SUPABASE_PUBLISHABLE_KEY", "sb_publishable_clave_ficticia")
     get_settings.cache_clear()
     modo = TestClient(create_app()).get("/api/modo").json()
     assert modo == {"modo": "produccion", "persistencia": "supabase", "aviso": None}

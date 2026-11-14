@@ -186,7 +186,10 @@ def get_ai_provider() -> AIProvider | None:
     clave = ajustes.openrouter_api_key.get_secret_value()
     if not clave or not ajustes.openrouter_model:
         return None
-    return OpenRouterProvider(clave, ajustes.openrouter_model, ajustes.openrouter_timeout_seconds)
+    return OpenRouterProvider(
+        clave, ajustes.openrouter_model, ajustes.openrouter_timeout_seconds,
+        fallback_models=ajustes.fallback_models_list,
+    )
 
 
 _LIMITADOR: Limitador | None = None

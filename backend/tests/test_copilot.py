@@ -387,3 +387,70 @@ def test_la_clave_no_aparece_en_los_logs(caplog):
     assert "clave-falsa-prueba" not in texto
     assert "mensaje privado del estudiante" not in texto
     assert "latencia_ms" in texto  # sí se registran métricas técnicas
+
+
+# ------------------------- Fallback explicito, sin introducir modelos de pago
+def test_openrouter_envia_fallbacks_gratuitos_en_una_sola_peticion():
+    llamadas = []
+    def manejador(request):
+        llamadas.append(json.loads(request.content))
+        return httpx.Response(200, json={
+            "model": "proveedor/alternativo:free",
+            "choices": [{"message": {"content": "Respuesta alternativa"}, "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 4, "completion_tokens": 3, "total_tokens": 7},
+        })
+
+    proveedor = OpenRouterProvider(
+        "clave-falsa-prueba", "proveedor/principal:free", 5,
+        transport=httpx.MockTransport(manejador),
+        fallback_models=["proveedor/alternativo:free"],
+    )
+    resultado = proveedor.complete([{"role": "user", "content": "Hola"}], 100)
+    assert len(llamadas) == 1
+    assert llamadas[0]["model"] == "proveedor/principal:free"
+    assert llamadas[0]["models"] == ["proveedor/principal:free", "proveedor/alternativo:free"]
+    assert resultado.model == "proveedor/alternativo:free"
+    assert resultado.text == "Respuesta alternativa"
+
+
+def test_openrouter_sin_fallback_no_cambia_cuerpo_original():
+    llamadas = []
+    def manejador(request):
+        llamadas.append(json.loads(request.content))
+        return httpx.Response(200, json=_ok())
+
+    proveedor = _proveedor_con(manejador)
+    proveedor.complete([{"role": "user", "content": "Hola"}], 100)
+    assert "models" not in llamadas[0]
+
+
+@pytest.mark.parametrize("valor", [
+    "openai/gpt-4o", "proveedor/gratis:free,openai/gpt-4o",
+    "malformado:free", "x/a:free,x/a:free",
+    "x/a:free,x/b:free,x/c:free,x/d:free",
+])
+def test_configuracion_rechaza_fallback_no_gratuito_o_invalido(valor):
+    from pydantic import ValidationError
+    from app.config import Settings
+    with pytest.raises(ValidationError):
+        Settings(_env_file=None, OPENROUTER_FALLBACK_MODELS=valor)
+
+
+def test_configuracion_fallbacks_gratuitos():
+    from app.config import Settings
+    ajuste = Settings(
+        _env_file=None,
+        OPENROUTER_FALLBACK_MODELS="proveedor/modelo-a:free,proveedor/modelo-b:free",
+    )
+    assert ajuste.fallback_models_list == ["proveedor/modelo-a:free", "proveedor/modelo-b:free"]
+
+
+def test_modo_fallback_no_permita_modelo_principal_de_pago():
+    from app.config import ConfigurationError, Settings
+    ajuste = Settings(
+        _env_file=None,
+        OPENROUTER_MODEL="proveedor/modelo-de-pago",
+        OPENROUTER_FALLBACK_MODELS="proveedor/alternativa:free",
+    )
+    with pytest.raises(ConfigurationError, match="también debe terminar en :free"):
+        ajuste.validate_runtime()

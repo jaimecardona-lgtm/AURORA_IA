@@ -3,11 +3,15 @@
 Plataforma académica del proyecto SENA: asignaturas y notas, finanzas personales, tareas, dashboard y
 copiloto de IA (React → Supabase Auth → FastAPI → Supabase PostgreSQL con RLS → React).
 
-> **Estado real del MVP:** la integración con Supabase está verificada de extremo a extremo (Fase 07C,
-> 59 de 59 pruebas con dos cuentas reales). El copiloto funciona en **modo simulado**; la llamada a OpenRouter
-> real y el despliegue en Render siguen **pendientes**. La persistencia de conversaciones (Fase 08A) tiene
-> pruebas locales aprobadas; su migración **aún no está aplicada** en Supabase.
-> Detalle completo, con lo verificado y lo pendiente: [docs/ESTADO_MVP_TRAZABILIDAD.md](docs/ESTADO_MVP_TRAZABILIDAD.md).
+> **Estado de preparación para despliegue (14-11-2026):** La integración del dominio con Supabase
+> fue comprobada en Fase 07C (59/59 pruebas). El usuario ejecutó en el proyecto correcto `AURORA_IA`
+> (`dsldzrtgzrthifsxmtwu`) el verificador SQL de Fase 08A con **20/20 filas `ok=true`**.
+> Esto verifica la estructura, políticas, grants y disparadores; **todavía no prueba el
+> aislamiento real de conversaciones con usuarios A/B**. El agente OpenRouter real y el
+> despliegue público a Render también siguen sin verificarse. `AI_CONVERSACIONES_PERSISTENTES`
+> permanece `false` por seguridad hasta realizar QA multiusuario. La última CI del PR #4
+> aprobó backend, frontend y smoke Docker. No confundir estas pruebas con producción validada.
+> Ver [guía de cierre](docs/RELEASE_GATES_SUPABASE_OPENROUTER_RENDER.md).
 
 ## Estructura
 
@@ -57,8 +61,7 @@ En el **SQL Editor** de Supabase:
 1. Pega y ejecuta `supabase/migrations/20261111120000_fase01_dominio_rls.sql`.
 2. Pega y ejecuta `supabase/tests/rls_dominio_test.sql`. Debe terminar sin errores y mostrar los mensajes `OK:`. Todo corre dentro de una transacción con `ROLLBACK`, así que no deja datos.
 
-Alternativa con la CLI de Supabase (requiere `supabase login` y el ID del proyecto):
-`supabase link --project-ref <ID>` seguido de `supabase db push`.
+Para este proyecto, con múltiples cuentas Supabase, **no usar `supabase link`, `db push` ni `db reset`**. Se requiere SQL Editor del proyecto verificado y revisión explícita de cualquier migración pendiente.
 
 ## 3. Backend
 

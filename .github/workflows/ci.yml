@@ -77,3 +77,24 @@ jobs:
 
       - name: Build de producción con Vite
         run: npm run build
+
+  docker:
+    name: Docker · imagen unificada
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v4
+      - name: Preparar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Construir imagen de producción sin credenciales
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: aurora-ai:ci
+          build-args: |
+            VITE_SUPABASE_URL=
+            VITE_SUPABASE_PUBLISHABLE_KEY=
+            VITE_API_BASE_URL=

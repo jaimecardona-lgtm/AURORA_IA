@@ -443,3 +443,14 @@ def test_configuracion_fallbacks_gratuitos():
         OPENROUTER_FALLBACK_MODELS="proveedor/modelo-a:free,proveedor/modelo-b:free",
     )
     assert ajuste.fallback_models_list == ["proveedor/modelo-a:free", "proveedor/modelo-b:free"]
+
+
+def test_modo_fallback_no_permita_modelo_principal_de_pago():
+    from app.config import ConfigurationError, Settings
+    ajuste = Settings(
+        _env_file=None,
+        OPENROUTER_MODEL="proveedor/modelo-de-pago",
+        OPENROUTER_FALLBACK_MODELS="proveedor/alternativa:free",
+    )
+    with pytest.raises(ConfigurationError, match="también debe terminar en :free"):
+        ajuste.validate_runtime()

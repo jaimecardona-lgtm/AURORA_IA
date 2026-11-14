@@ -42,9 +42,12 @@ class OpenRouterProvider:
         timeout_seconds: float,
         transport: httpx.BaseTransport | None = None,
         endpoint: str = ENDPOINT,
+        fallback_models: list[str] | None = None,
     ) -> None:
         self._api_key = api_key
         self.model = model
+        # No automatizar cambios a modelos de pago: sólo fallbacks configurados explícitamente.
+        self._fallback_models = list(fallback_models or [])
         self._endpoint = endpoint
         self._client = httpx.Client(
             timeout=httpx.Timeout(timeout_seconds),
@@ -58,6 +61,9 @@ class OpenRouterProvider:
             "max_tokens": max_tokens,
             "temperature": 0.2,
         }
+        if self._fallback_models:
+            # OpenRouter intenta los modelos en orden en una sola petición HTTP.
+            cuerpo["models"] = [self.model, *self._fallback_models]
         cabeceras = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",

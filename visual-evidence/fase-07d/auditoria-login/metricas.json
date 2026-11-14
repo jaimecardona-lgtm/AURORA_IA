@@ -1,0 +1,106 @@
+{
+  "etapa": "login",
+  "base": "http://127.0.0.1:8767",
+  "resultados": [
+    {
+      "pantalla": "Inicio de sesión",
+      "tamano": "movil",
+      "ancho": 390,
+      "alto": 844,
+      "ancho_documento": 390,
+      "ancho_ventana": 390,
+      "desborde_horizontal_px": 0,
+      "fuera_de_viewport": [],
+      "solapamientos": 0,
+      "texto_menor_12px": 0,
+      "scroll_vertical_documento_px": 0,
+      "campo_copiloto_presente": false,
+      "campo_copiloto_entero_en_viewport": null,
+      "campos_alto_px": [
+        44,
+        44
+      ],
+      "boton_entrar_alto_px": 46
+    },
+    {
+      "pantalla": "Inicio de sesión",
+      "tamano": "tableta",
+      "ancho": 768,
+      "alto": 1024,
+      "ancho_documento": 768,
+      "ancho_ventana": 768,
+      "desborde_horizontal_px": 0,
+      "fuera_de_viewport": [],
+      "solapamientos": 0,
+      "texto_menor_12px": 0,
+      "scroll_vertical_documento_px": 0,
+      "campo_copiloto_presente": false,
+      "campo_copiloto_entero_en_viewport": null,
+      "campos_alto_px": [
+        44,
+        44
+      ],
+      "boton_entrar_alto_px": 46
+    },
+    {
+      "pantalla": "Inicio de sesión",
+      "tamano": "portatil",
+      "ancho": 1366,
+      "alto": 768,
+      "ancho_documento": 1366,
+      "ancho_ventana": 1366,
+      "desborde_horizontal_px": 0,
+      "fuera_de_viewport": [],
+      "solapamientos": 0,
+      "texto_menor_12px": 0,
+      "scroll_vertical_documento_px": 0,
+      "campo_copiloto_presente": false,
+      "campo_copiloto_entero_en_viewport": null,
+      "campos_alto_px": [
+        44,
+        44
+      ],
+      "boton_entrar_alto_px": 46
+    },
+    {
+      "pantalla": "Inicio de sesión",
+      "tamano": "escritorio",
+      "ancho": 1440,
+      "alto": 900,
+      "ancho_documento": 1440,
+      "ancho_ventana": 1440,
+      "desborde_horizontal_px": 0,
+      "fuera_de_viewport": [],
+      "solapamientos": 0,
+      "texto_menor_12px": 0,
+      "scroll_vertical_documento_px": 0,
+      "campo_copiloto_presente": false,
+      "campo_copiloto_entero_en_viewport": null,
+      "campos_alto_px": [
+        44,
+        44
+      ],
+      "boton_entrar_alto_px": 46
+    },
+    {
+      "pantalla": "Inicio de sesión",
+      "tamano": "full_hd",
+      "ancho": 1920,
+      "alto": 1080,
+      "ancho_documento": 1920,
+      "ancho_ventana": 1920,
+      "desborde_horizontal_px": 0,
+      "fuera_de_viewport": [],
+      "solapamientos": 0,
+      "texto_menor_12px": 0,
+      "scroll_vertical_documento_px": 0,
+      "campo_copiloto_presente": false,
+      "campo_copiloto_entero_en_viewport": null,
+      "campos_alto_px": [
+        44,
+        44
+      ],
+      "boton_entrar_alto_px": 46
+    }
+  ]
+}

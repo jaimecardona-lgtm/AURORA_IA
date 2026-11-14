@@ -1,0 +1,137 @@
+{
+  "tipo": "backend simulado en el navegador (route mock): valida la interfaz, no la base de datos",
+  "total": 26,
+  "fallos": 0,
+  "resultados": [
+    {
+      "prueba": "Carga · el historial del servidor se muestra al abrir el copiloto",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Carga · la nota indica guardado en la cuenta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Carga · la conversación previa aparece en la lista",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Envío · la respuesta aparece",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Envío · una sola consulta al copiloto",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Envío · la pregunta se guarda una vez",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Envío · la respuesta se guarda una vez",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Envío · el servidor tiene pregunta y respuesta (sin duplicados)",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Recarga · el historial se recupera tras recargar la página",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Guardado fallido · se muestra el error con reintento",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Guardado fallido · el modelo se consultó una sola vez",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Guardado fallido · el reintento guarda la respuesta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Guardado fallido · el reintento no vuelve a consultar al modelo",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Guardado fallido · pregunta y respuesta guardadas una sola vez",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Fallo del modelo · se muestra el error con reintento",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Fallo del modelo · el reintento responde",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Fallo del modelo · la pregunta queda guardada una sola vez",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Nueva · la conversación nueva recibe la respuesta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Nueva · el título se deriva de la primera pregunta",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Nueva · la conversación anterior sigue en la lista",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget · responde en la conversación activa",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Widget · la pregunta aparece en la página completa",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Privacidad · ninguna petición al copiloto incluye credenciales",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Borrado · la conversación activa desaparece del servidor",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Borrado · sus mensajes se eliminan en cascada",
+      "resultado": "PASS",
+      "detalle": ""
+    },
+    {
+      "prueba": "Borrado · la conversación previa no se toca",
+      "resultado": "PASS",
+      "detalle": ""
+    }
+  ]
+}

@@ -108,6 +108,8 @@ class Settings(BaseSettings):
 
     def validate_runtime(self) -> None:
         """Falla al arrancar si la combinación de configuración es insegura."""
+        if self.openrouter_fallback_models and self.openrouter_model and not self.openrouter_model.endswith(":free"):
+            raise ConfigurationError("Si hay fallbacks gratuitos, OPENROUTER_MODEL también debe terminar en :free.")
         if self.copilot_provider == "simulado" and self.app_env.strip().lower() not in DEMO_ALLOWED_ENVIRONMENTS:
             raise ConfigurationError("COPILOT_PROVIDER=simulado solo se permite en desarrollo. No es IA real.")
         if self.demo_mode:

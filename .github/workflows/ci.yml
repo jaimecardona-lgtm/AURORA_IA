@@ -93,8 +93,36 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
+          load: true
           tags: aurora-ai:ci
           build-args: |
-            VITE_SUPABASE_URL=
-            VITE_SUPABASE_PUBLISHABLE_KEY=
+            VITE_SUPABASE_URL=https://proyecto-ficticio.supabase.co
+            VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_clave_ficticia
             VITE_API_BASE_URL=
+      - name: Smoke test de imagen compilada (sin acceso a Supabase)
+        run: |
+          set -euo pipefail
+          docker run -d --name aurora-ci -p 127.0.0.1:18000:8000 \
+            -e APP_ENV=production \
+            -e PERSISTENCE_BACKEND=supabase \
+            -e DEMO_MODE=false \
+            -e SUPABASE_URL=https://proyecto-ficticio.supabase.co \
+            -e SUPABASE_PUBLISHABLE_KEY=sb_publishable_clave_ficticia \
+            -e COPILOT_PROVIDER=openrouter \
+            aurora-ai:ci
+          trap 'docker logs aurora-ci; docker rm -f aurora-ci >/dev/null 2>&1 || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18000/api/health -o /tmp/aurora-health.json; then break; fi
+            sleep 1
+          done
+          python3 - <<'PY'
+          import json
+          result = json.load(open("/tmp/aurora-health.json", encoding="utf-8"))
+          assert result["status"] == "ok", result
+          assert result["supabase_configurado"] is True, result
+          PY
+          curl -fsS http://127.0.0.1:18000/api/modo | python3 -c 'import json,sys; o=json.load(sys.stdin); assert o["modo"]=="produccion" and o["persistencia"]=="supabase", o'
+          curl -fsS http://127.0.0.1:18000/ -o /tmp/aurora-index.html
+          grep -q 'assets/index-' /tmp/aurora-index.html
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18000/api/subjects)" = "401"
+          echo "Docker smoke aprobado: SPA, salud, modo seguro y API protegida."

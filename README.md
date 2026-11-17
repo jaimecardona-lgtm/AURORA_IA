@@ -27,6 +27,70 @@ Dockerfile             Imagen única: compila el frontend y sirve API + SPA en e
 render.yaml            Blueprint de Render (Web Service Docker). No desplegado.
 ```
 
+git status --short
+git branch --show-current
+docker version
+
+$env:VITE_SUPABASE_URL = "https://dsldzrtgzrthifsxmtwu.supabase.co"
+
+$env:VITE_SUPABASE_PUBLISHABLE_KEY = Read-Host "Clave publica de Supabase"
+
+
+docker build -t aurora-ai:clase `
+  --build-arg "VITE_SUPABASE_URL=$env:VITE_SUPABASE_URL" `
+  --build-arg "VITE_SUPABASE_PUBLISHABLE_KEY=$env:VITE_SUPABASE_PUBLISHABLE_KEY" `
+  --build-arg "VITE_API_BASE_URL=" `
+  .
+
+
+docker images aurora-ai
+
+
+docker run -d `
+  --name aurora-clase `
+  -p 8080:8000 `
+  --env-file .\backend\.env `
+  -e "APP_ENV=production" `
+  -e "PERSISTENCE_BACKEND=supabase" `
+  -e "DEMO_MODE=false" `
+  -e "PORT=8000" `
+  -e "SUPABASE_URL=$env:VITE_SUPABASE_URL" `
+  -e "SUPABASE_PUBLISHABLE_KEY=$env:VITE_SUPABASE_PUBLISHABLE_KEY" `
+  -e "JWT_AUDIENCE=authenticated" `
+  -e "CORS_ORIGINS=" `
+  -e "COPILOT_PROVIDER=openrouter" `
+  -e "OPENROUTER_MODEL=openrouter/free" `
+  -e "OPENROUTER_FALLBACK_MODELS=" `
+  -e "AI_CONVERSACIONES_PERSISTENTES=false" `
+  aurora-ai:clase
+
+docker ps
+
+docker logs -f --tail 50 aurora-clase
+
+
+Invoke-RestMethod http://localhost:8080/api/health
+
+Invoke-RestMethod http://localhost:8080/api/modo
+
+docker exec aurora-clase ls /app/static
+
+Start-Process "http://localhost:8080"
+
+# Detener el contenedor
+docker stop aurora-clase
+
+# Comprobar que ya no esta ejecutandose
+docker ps
+
+# Volver a iniciar el mismo contenedor
+docker start aurora-clase
+
+# Comprobar que volvio a levantarse
+docker ps
+
+
+
 ## Requisitos
 
 - Node.js 22+ y npm.
